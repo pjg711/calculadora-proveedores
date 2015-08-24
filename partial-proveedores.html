@@ -1,0 +1,75 @@
+<div class="preloader" ng-show="layout.loading">
+    <i class="fa fa-refresh fa-5 fa-spin"></i>
+</div>
+<div ng-show="!layout.loading">
+    <h2>Proveedores</h2>
+    <input type="text" placeholder="Buscar..." ng-model="buscar" />
+	<h3>Cargar</h3>
+	<form name="nuevoprov" ng-submit="cargarProveedores(nuevoprov)" novalidate>
+		<div class="form-group" ng-class="{'has-error': nuevoprov.nombre.$invalid && nuevoprov.$dirty}">
+			<input type="text" class="form-control" name="nombre" placeholder="Nombre..." ng-model="nombre" minlength="3" required />
+			<div class="validation text-danger" ng-messages="nuevoprov.nombre.$error" ng-if="nuevoprov.nombre.$touched || nuevoprov.$submitted">
+				<div ng-message="required" ng-show="nuevoprov.nombre.$error.required">Ese campo es requerido</div>
+				<div ng-message="minlength" ng-show="nuevoprov.nombre.$error.minlength">El nombre es demasiado corto</div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{'has-error': nuevoprov.apellido.$invalid && nuevoprov.$dirty}">
+			<input type="text" class="form-control" name="apellido" placeholder="Apellido..." ng-model="apellido" minlength="3" required />
+			<div class="validation text-danger" ng-messages="nuevoprov.apellido.$error" ng-if="nuevoprov.apellido.$touched || nuevoprov.$submitted">
+				<div ng-message="required" ng-show="nuevoprov.apellido.$error.required">Ese campo es requerido</div>
+				<div ng-message="minlength" ng-show="nuevoprov.apellido.$error.minlength">El apellido es demasiado corto</div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{'has-error': nuevoprov.edad.$invalid && nuevoprov.$dirty}">
+			<input type="number" class="form-control" name="edad" placeholder="Edad..." ng-model="e" min="0" />
+			<div class="validation text-danger" ng-messages="nuevoprov.edad.$error">
+				<div ng-message="min" ng-show="nuevoprov.edad.$error.min">Ese campo debe ser porsitivo</div>
+			</div>		
+		</div>
+		<button class="btn btn-primary" type="submit" ng-disabled="nuevoprov.$invalid">Cargar</button>
+	</form>
+	<pre>{{nuevoprov | json}}</pre>
+	<table class="table">
+		<tr>
+			<th>ID</th>
+			<th>Nombre</th>
+			<th>Apellido</th>
+			<th>Edad</th>
+			<th>Opciones</th>
+		</tr>
+		<tr ng-repeat="p in proveedores | filter: buscar">
+			<td>{{p.id}}</td>
+			<td>
+				<div ng-hide="editarDatos[p.id]">
+					{{p.nombre}}
+				</div>
+				<div ng-show="editarDatos[p.id]">
+					<input type="text" class="form-control" name="nombre" placeholder="Nombre..." ng-model="p.nombre" minlength="3" required />
+				</div>
+			</td>
+			<td>
+				<div ng-hide="editarDatos[p.id]">
+					{{p.apellido}}
+				</div>
+				<div ng-show="editarDatos[p.id]">
+					<input type="text" class="form-control" name="apellido" placeholder="Apellido..." ng-model="p.apellido" minlength="3" required />
+				</div>
+			</td>
+			<td>{{p.edad}}</td>
+			<td>
+				<button ng-hide="editarDatos[p.id]" ng-click="editarProveedor(p)">
+					<i class="fa fa-pencil"></i>&nbsp;Editar
+				</button>
+				<button ng-show="editarDatos[p.id]" ng-click="guardarProveedor(p)">
+					<i class="fa fa-floppy-o"></i>&nbsp;Guardar
+				</button>
+				<button ng-show="editarDatos[p.id]" ng-click="cancelarProveedor(p)">
+				| 
+				<button ng-click="borrarProveedor(p.id)">
+				<i class="fa fa-trash-o"></i>&nbsp;Borrar
+				</button>
+			</td>
+		</tr>
+	</table>
+	<pre>{{editarprov | json}}</pre>
+</div>
