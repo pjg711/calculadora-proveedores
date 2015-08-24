@@ -28,7 +28,7 @@
 		</div>
 		<button class="btn btn-primary" type="submit" ng-disabled="nuevoprov.$invalid">Cargar</button>
 	</form>
-	<pre>{{nuevoprov | json}}</pre>
+	<!-- <pre>{{nuevoprov | json}}</pre> -->
 	<table class="table">
 		<tr>
 			<th>ID</th>
@@ -63,7 +63,7 @@
 				<button ng-show="editarDatos[p.id]" ng-click="guardarProveedor(p)">
 					<i class="fa fa-floppy-o"></i>&nbsp;Guardar
 				</button>
-				<button ng-show="editarDatos[p.id]" ng-click="cancelarProveedor(p)">
+				<button ng-show="editarDatos[p.id]" ng-click="cancelarProveedor(p)">&nbsp;Cancelar</button>
 				| 
 				<button ng-click="borrarProveedor(p.id)">
 				<i class="fa fa-trash-o"></i>&nbsp;Borrar
